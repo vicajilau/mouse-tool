@@ -10,9 +10,11 @@ import java.io.PrintWriter;
 
 import javax.swing.JOptionPane;
 
-public class GestorFichero {
+public class GestorScripts {
 	public static String textoPorDefectActivaRaton = "xinput set-prop XX \"Device Enabled\" 1";
 	public static String textoPorDefectDesactivaRaton = "xinput set-prop XX \"Device Enabled\" 0";
+	public static String direccionScript1 = "/opt/mouse-tool/config/activa-raton";
+	public static String direccionScript2 = "/opt/mouse-tool/config/desactiva-raton";
 	
 	/**
 	 * Configura los scripts por defecto a la configuración del Sistema Operativo

@@ -4,8 +4,7 @@ import javax.swing.JOptionPane;
 
 public class Principal {
 	
-	private static String script1 = "/opt/mouse-tool/config/activa-raton";
-	private static String script2 = "/opt/mouse-tool/config/desactiva-raton";
+	
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -16,23 +15,23 @@ public class Principal {
 		System.out.println();
 		
 		if(Sistema.esSoAdmitido()) {
-			GestorFichero gestorFile = new GestorFichero();
+			GestorScripts gestorFile = new GestorScripts();
 			Touchpad touchpad = new Touchpad();
 			// Si los script está desconfigurado deben configurarse
-			if(gestorFile.esConfigPorDefecto(script1, script2)) {
+			if(gestorFile.esConfigPorDefecto(GestorScripts.direccionScript1, GestorScripts.direccionScript2)) {
 				System.out.println("Se debe proceder a configurar los Scripts");
-				gestorFile.configuraScripts(script1, script2, touchpad.getID());
+				gestorFile.configuraScripts(GestorScripts.direccionScript1, GestorScripts.direccionScript2, touchpad.getID());
 			}
 			
 			// Comprueba que el parámetro es un parámetro valido
 			if (PValidador.esParamValido(args)) {
 				if(args[0].equals(PValidador.parametroActivar)) {
 					// Es el parámetro para activar
-					CMD.enviarComandoSinDevol(script1);
+					CMD.enviarComandoSinDevol(GestorScripts.direccionScript1);
 					
 				}else if(args[0].equals(PValidador.parametroDesactivar)) {
 					// Es el parámetro para desactivar
-					CMD.enviarComandoSinDevol(script2);
+					CMD.enviarComandoSinDevol(GestorScripts.direccionScript2);
 				}
 				
 			} else {
