@@ -22,7 +22,7 @@ public class CMD {
      * @return
      */
     private static boolean esLineaDelTouchpad(String linea){
-     return linea.contains("Touchpad");
+     return linea.trim().toLowerCase().contains("touchpad");
     }
 	
 	/**

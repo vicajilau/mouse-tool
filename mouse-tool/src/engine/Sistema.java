@@ -16,9 +16,10 @@ public class Sistema {
     	String SO1="Debian";
     	String SO2="Linux Mint";
     	String SO3="Ubuntu";
+    	String S04 = "Deepin 15.5";
     	
     	boolean esEjecutable = false;
-    	if(DISTRIB_DESCRIPTION.contains(SO1)||DISTRIB_DESCRIPTION.contains(SO2)||DISTRIB_DESCRIPTION.contains(SO3)){
+    	if(DISTRIB_DESCRIPTION.contains(SO1)||DISTRIB_DESCRIPTION.contains(SO2)||DISTRIB_DESCRIPTION.contains(SO3) || DISTRIB_DESCRIPTION.contains(S04)){
     		esEjecutable = true;
     	}
     	return esEjecutable;

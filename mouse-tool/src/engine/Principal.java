@@ -37,13 +37,13 @@ public class Principal {
 			if (PValidador.esParamValido(args)) {
 				if(args[0].equals(PValidador.parametroActivar)) {
 					// Es el parámetro para activar
-					CMD.enviarComandoSinDevol(GestorScripts.direccionScript1);
+					CMD.enviarComandoSinDevol("bash " + GestorScripts.direccionScript1);
 					WindowsWithPanel ventanaActivar = new WindowsWithPanel(new PanelActivar());
 					ventanaActivar.dispose();
 					
 				}else if(args[0].equals(PValidador.parametroDesactivar)) {
 					// Es el parámetro para desactivar
-					CMD.enviarComandoSinDevol(GestorScripts.direccionScript2);
+					CMD.enviarComandoSinDevol("bash " + GestorScripts.direccionScript2);
 					WindowsWithPanel ventanaDesactivar = new WindowsWithPanel(new PanelDesactivar());
 					ventanaDesactivar.dispose();
 				}
