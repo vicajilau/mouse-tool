@@ -5,7 +5,11 @@ import javax.swing.JOptionPane;
 public class Principal {
 	
 	
-	
+	/**
+	 * Entrada al programa
+	 * @param args
+	 */
+
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		System.out.print("Los parámetros introducidos son: " );
@@ -14,8 +18,10 @@ public class Principal {
 		}
 		System.out.println();
 		
+		GestorScripts gestorFile = new GestorScripts();
+		
 		if(Sistema.esSoAdmitido()) {
-			GestorScripts gestorFile = new GestorScripts();
+			
 			Touchpad touchpad = new Touchpad();
 			// Si los script está desconfigurado deben configurarse
 			if(gestorFile.esConfigPorDefecto(GestorScripts.direccionScript1, GestorScripts.direccionScript2)) {
@@ -39,7 +45,7 @@ public class Principal {
 				System.out.println("No es un parámetro válido");
 			}
 		}else {
-			JOptionPane.showMessageDialog(null, "La distribución GNU/Linux " + Sistema.DISTRIB_DESCRIPTION+ " no es compatible con esta aplicación", "Distribución no compatible", JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(null, "La distribución GNU/Linux " + Sistema.DISTRIB_DESCRIPTION+ " no es compatible con esta aplicación", "Distribución no compatible", JOptionPane.INFORMATION_MESSAGE );
 		}
 	}
 
