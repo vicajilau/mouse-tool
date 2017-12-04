@@ -6,6 +6,8 @@ import java.awt.Graphics;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
+import engine.Sistema;
+
 public class PanelActivar extends JPanel {
 	/**
 	 * 
@@ -20,7 +22,14 @@ public class PanelActivar extends JPanel {
 	 */
 	public void paintComponent(Graphics g) {
 		Dimension tamanio = getSize();
-		ImageIcon imagenFondo = new ImageIcon(getClass().getResource("/images/touchpad-activa-icon.png"));
+		
+		// Ajusta la imagen del panel en función de la resolución
+		ImageIcon imagenFondo;
+		if(Sistema.SCREEN_WIDTH<1920) {
+			imagenFondo = new ImageIcon(getClass().getResource("/images/touchpad-mHD-activa-icon.png"));
+		}else {
+			imagenFondo = new ImageIcon(getClass().getResource("/images/touchpad-activa-icon.png"));
+		}
 		g.drawImage(imagenFondo.getImage(), 0, 0, tamanio.width, tamanio.height, null);
 		setOpaque(false);
 		super.paintComponent(g);

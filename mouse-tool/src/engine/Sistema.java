@@ -7,6 +7,8 @@ import java.io.InputStreamReader;
 public class Sistema {
 	 
     public static String DISTRIB_DESCRIPTION = Sistema.cualDistribucionLinux();
+    public static int SCREEN_WIDTH = java.awt.Toolkit.getDefaultToolkit().getScreenSize().width;
+    public static int SCREEN_HEIGHT = java.awt.Toolkit.getDefaultToolkit().getScreenSize().height;
     
     /**
      * Comprueba si el SO es admitido o no

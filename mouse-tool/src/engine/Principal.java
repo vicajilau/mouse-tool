@@ -27,6 +27,7 @@ public class Principal {
 		if(Sistema.esSoAdmitido()) {
 			
 			Touchpad touchpad = new Touchpad();
+
 			
 			// Comprueba que el parámetro es un parámetro valido
 			if (PValidador.esParamValido(args)) {
