@@ -27,24 +27,23 @@ public class Principal {
 		if(Sistema.esSoAdmitido()) {
 			
 			Touchpad touchpad = new Touchpad();
-			// Si los script está desconfigurado deben configurarse
-			if(gestorFile.esConfigPorDefecto(GestorScripts.direccionScript1, GestorScripts.direccionScript2)) {
-				System.out.println("Se debe proceder a configurar los Scripts");
-				gestorFile.configuraScripts(GestorScripts.direccionScript1, GestorScripts.direccionScript2, touchpad.getID());
-			}
 			
 			// Comprueba que el parámetro es un parámetro valido
 			if (PValidador.esParamValido(args)) {
+				// configura los scripts
+				gestorFile.configuraScripts(GestorScripts.direccionScript1, GestorScripts.direccionScript2, touchpad.getID());
 				if(args[0].equals(PValidador.parametroActivar)) {
 					// Es el parámetro para activar
 					CMD.enviarComandoSinDevol("bash " + GestorScripts.direccionScript1);
 					WindowsWithPanel ventanaActivar = new WindowsWithPanel(new PanelActivar());
+					gestorFile.configuraScriptsPorDefecto(GestorScripts.direccionScript1, GestorScripts.direccionScript2);
 					ventanaActivar.dispose();
 					
 				}else if(args[0].equals(PValidador.parametroDesactivar)) {
 					// Es el parámetro para desactivar
 					CMD.enviarComandoSinDevol("bash " + GestorScripts.direccionScript2);
 					WindowsWithPanel ventanaDesactivar = new WindowsWithPanel(new PanelDesactivar());
+					gestorFile.configuraScriptsPorDefecto(GestorScripts.direccionScript1, GestorScripts.direccionScript2);
 					ventanaDesactivar.dispose();
 				}
 				
