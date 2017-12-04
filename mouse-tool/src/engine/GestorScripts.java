@@ -79,7 +79,7 @@ public class GestorScripts {
 	}
 	
 	/**
-	 * Configura los scripts por defecto a la configuración del Sistema Operativo
+	 * Configura los scripts de por defecto a la configuración del id proporcionado por XINPUT
 	 * @param file1 La dirección del 1º script para activar
 	 * @param file2 La dirección del 2º script para desactivar
 	 * @param id El ID del Touchpad segun el Sistema Operativo
@@ -145,62 +145,4 @@ public class GestorScripts {
         }
         
     }
-	
-	/**
-	 * Comprueba si los Scripts tienen configuración por defecto 
-	 * @param file1 El primer script para Activar el Touchpad
-	 * @param file2 El segundo Script para desactivar el Touchpad
-	 * @return Si tienen configuración por defecto o no.
-	 */
-	public boolean esConfigPorDefecto(String file1, String file2) {
-		boolean esPorDefectoFile1 = false;
-		boolean esPorDefectoFile2 = false;
-		
-		try {
-			// Se comprueba si el 1º fichero tiene configuración por defecto
-			File inFile1 = new File(file1);
-	        if (!inFile1.isFile()) {
-	        	JOptionPane.showMessageDialog(null, "El fichero de configuración: " + file1 +" no ha sido encontrado", "Ups, algo ha ido mal", JOptionPane.ERROR_MESSAGE);
-	            return false;
-	        }
-	        
-	        BufferedReader br = new BufferedReader(new FileReader(file1));
-	        String line ;
-	        //Read from the original file and write to the new 
-	        //unless content matches data to be removed.
-	        while ((line = br.readLine()) != null) {
-	            if (line.trim().equals(textoPorDefectActivaRaton)) {
-	                esPorDefectoFile1 = true;
-	            }
-	        }
-	        br.close();
-	        
-	        
-	     // Se comprueba si el 1º fichero tiene configuración por defecto
-	        File inFile2 = new File(file2);
-			if (!inFile2.isFile()) {
-				JOptionPane.showMessageDialog(null, "El fichero de configuración: " + file2 + " no ha sido encontrado",
-						"Ups, algo ha ido mal", JOptionPane.ERROR_MESSAGE);
-				return false;
-			}
-
-			br = new BufferedReader(new FileReader(file2));
-			// Read from the original file and write to the new
-			// unless content matches data to be removed.
-			while ((line = br.readLine()) != null) {
-				if (line.trim().equals(textoPorDefectDesactivaRaton)) {
-					esPorDefectoFile2 = true;
-				}
-			}
-			br.close();
-	        
-		}catch (FileNotFoundException ex) {
-            ex.printStackTrace();
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-
-        return(esPorDefectoFile1 && esPorDefectoFile2);
-        
-	}
 }
