@@ -9,13 +9,9 @@ import javax.swing.JPanel;
 import engine.Sistema;
 
 public class PanelDesactivar extends JPanel {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
 	
 	public PanelDesactivar () {
-		this.setSize(400,427);
+		this.setSize(350,374);
 	}
 	/**
 	 * @override
@@ -25,7 +21,9 @@ public class PanelDesactivar extends JPanel {
 		// Ajusta la imagen del panel en función de la resolución
 				ImageIcon imagenFondo;
 				if(Sistema.SCREEN_WIDTH<1920) {
+					this.setSize(200,213); // Ajusta el tamanio del panel a la imagen
 					imagenFondo = new ImageIcon(getClass().getResource("/images/touchpad-mHD-desactiva-icon.png"));
+					
 				}else {
 					imagenFondo = new ImageIcon(getClass().getResource("/images/touchpad-desactiva-icon.png"));
 				}

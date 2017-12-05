@@ -8,6 +8,9 @@ import java.awt.GraphicsEnvironment;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import engine.Sistema;
+
 import static java.awt.GraphicsDevice.WindowTranslucency.*;
 
 public class WindowsWithPanel extends JFrame {
@@ -51,7 +54,12 @@ public class WindowsWithPanel extends JFrame {
 		setType(Type.POPUP);
 		setOpacity(1.0f);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 400, 427);
+		// Ajusta el tamanio del Frame a la resolucion del panel
+		if(Sistema.SCREEN_WIDTH<1920) {
+			setBounds(100, 100, 200, 213);
+		}else {
+			setBounds(100, 100, 350, 374);
+		}
 		setUndecorated(true);
 		setBackground(new Color(0,0,0,0));
 		setLocationRelativeTo(null);
