@@ -36,7 +36,6 @@ public class CMD {
      * @return     the sum of x and y 
      */
     public static String getIDConsola(){
-
         try {
             Boolean encontrado = false;
             
@@ -46,6 +45,54 @@ public class CMD {
             String line = null;  
             while (!encontrado && ((line = in.readLine()) != null)) {  
                 if(esLineaDelTouchpad(line)){
+                    encontrado = true;
+                }
+            }
+            if(encontrado){
+                return line;
+            }
+        } catch (IOException e) {
+        }
+        return null;
+    }
+    
+    /**
+     * Comprueba cuantos dispositivos Touchpad hay en el sistema
+     * @return El número de dispositivos Touchpad
+     */
+    public static int getDevicesTouchpad() {
+    	int devices = 0;  
+    	 try {
+             // Ejecuta un comando sin argumentos
+             Process p = Runtime.getRuntime().exec("xinput list");  
+             BufferedReader in = new BufferedReader( new InputStreamReader(p.getInputStream()));  
+             
+             String line = new String();
+             while ((line = in.readLine()) != null) {  
+                 if(esLineaDelTouchpad(line)){
+                     devices ++;
+                 }
+             }
+         } catch (IOException e) {
+         }
+         return devices;
+    }
+    
+    /**
+     * Envía un comando para saber la dirección en donde está buscando el fichero y es devuelta 
+     * como un String
+     * @return La ruta en donde se encuentra
+     */
+    public static String getPWD() {
+    	try {
+            Boolean encontrado = false;
+            
+            // Ejecuta un comando sin argumentos
+            Process p = Runtime.getRuntime().exec("pwd");  
+            BufferedReader in = new BufferedReader( new InputStreamReader(p.getInputStream()));  
+            String line = null;  
+            while (!encontrado && ((line = in.readLine()) != null)) {  
+                if(line.contains("/")){
                     encontrado = true;
                 }
             }

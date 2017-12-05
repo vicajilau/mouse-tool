@@ -6,10 +6,24 @@ public class Touchpad{
      * Constructor de objetos de la clase Touchpad
      */
     public Touchpad(){
-        String idText=getID(CMD.getIDConsola());
-        if (idText!=null){
-            this.id = Integer.parseInt(idText);
-        }
+        id = Integer.parseInt(obtenElIdDelSistema());
+    }
+    
+    /**
+     * En función del numero de IDs encontrados devuelve el ID apropiado para cada situación
+     * @return Un único ID en forma de cadena
+     */
+    private String obtenElIdDelSistema() {
+    	int devices = CMD.getDevicesTouchpad();
+    	if(devices > 1) {
+    		// Hay más de 1 dispositivo (Se debe resolver posibles conflictos en múltiples ids en el futuro)
+    		return getID(CMD.getIDConsola());
+    	}else if(devices==1) {
+    		return getID(CMD.getIDConsola());
+    	}else {
+    		// Algo ha salido mal al obtener el ID (Se debería generar excepcion en el futuro)
+    		return new String();
+    	}
     }
     
     /**
@@ -36,7 +50,7 @@ public class Touchpad{
      * Activa el touchpad
      */
     public void activarTouchpad() {
-    	String comando = "xinput set-prop " + getID() + " \"Device Enabled\" 0";
+    	String comando = "xinput enable " + getID();
     	CMD.enviarComandoSinDevol(comando);
     }
     
@@ -44,7 +58,7 @@ public class Touchpad{
      * Desactiva el touchpad
      */
     public void desactivarTouchpad() {
-    	String comando = "xinput set-prop " + getID() + " \"Device Enabled\" 0";
+    	String comando = "xinput disable " + getID();
     	CMD.enviarComandoSinDevol(comando);
     }
 }

@@ -1,0 +1,3 @@
+#!/bin/bash
+# Script de bash
+xinput disable XX

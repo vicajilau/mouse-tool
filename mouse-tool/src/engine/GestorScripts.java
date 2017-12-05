@@ -12,10 +12,12 @@ import javax.swing.JOptionPane;
 
 public class GestorScripts {
 	
-	public static String textoPorDefectActivaRaton = "xinput set-prop XX \"Device Enabled\" 1";
-	public static String textoPorDefectDesactivaRaton = "xinput set-prop XX \"Device Enabled\" 0";
-	public static String direccionScript1 = "/opt/mouse-tool/config/activa-raton";
-	public static String direccionScript2 = "/opt/mouse-tool/config/desactiva-raton";
+	public static String textoPorDefectActivaRaton = "xinput enable XX";
+	public static String textoPorDefectDesactivaRaton = "xinput disable XX";
+	//public static String direccionScript1 = "/opt/mouse-tool/config/activa-raton";
+	//public static String direccionScript2 = "/opt/mouse-tool/config/desactiva-raton";
+	public static String direccionScript1 = "./config/activa-raton";
+	public static String direccionScript2 = "./config/desactiva-raton";
 	
 	/**
 	 * Vuelve a dejar los scripts en configuración por defecto
@@ -26,7 +28,8 @@ public class GestorScripts {
 		try {
             File inFile = new File(file1);
             if (!inFile.isFile()) {
-            	JOptionPane.showMessageDialog(null, "El fichero de configuración: " + file1 +" no ha sido encontrado", "Ups, algo ha ido mal", JOptionPane.ERROR_MESSAGE);
+            	String pwd = CMD.getPWD();
+            	JOptionPane.showMessageDialog(null, "El fichero de configuración: " + file1 +" no ha sido encontrado en: " + pwd, "Ups, algo ha ido mal", JOptionPane.ERROR_MESSAGE);
                 return;
             }
             //Construct the new file that will later be renamed to the original filename. 
@@ -50,7 +53,8 @@ public class GestorScripts {
             // Ahora para el script 2
             inFile = new File(file2);
             if (!inFile.isFile()) {
-            	JOptionPane.showMessageDialog(null, "El fichero de configuración: " + file2 +" no ha sido encontrado", "Ups, algo ha ido mal", JOptionPane.ERROR_MESSAGE);
+            	String pwd = CMD.getPWD();
+            	JOptionPane.showMessageDialog(null, "El fichero de configuración: " + file2 +" no ha sido encontrado en: " + pwd, "Ups, algo ha ido mal", JOptionPane.ERROR_MESSAGE);
                 return;
             }
             
@@ -73,7 +77,7 @@ public class GestorScripts {
  
             
         } catch (FileNotFoundException ex) {
-            JOptionPane.showMessageDialog(null, "El fichero de configuración no ha sido encontrado", "Ups, algo ha ido mal", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "El fichero de configuración no ha sido encontrado en: " + CMD.getPWD(), "Ups, algo ha ido mal", JOptionPane.ERROR_MESSAGE);
         } catch (IOException ex) {
         	 JOptionPane.showMessageDialog(null, "Se ha encontrado un error al leer o escribir en los ficheros de configuración", "Ups, algo ha ido mal", JOptionPane.ERROR_MESSAGE);
         }
@@ -87,13 +91,14 @@ public class GestorScripts {
 	 */
 	public void configuraScripts(String file1, String file2, int id) {
 		
-		String textoParaActivar = "xinput set-prop " + id +" \"Device Enabled\" 1";
-		String textoParaDesactivar = "xinput set-prop " + id +" \"Device Enabled\" 0";
+		String textoParaActivar = "xinput enable " + id ;
+		String textoParaDesactivar = "xinput disable " + id ;
 		
         try {
             File inFile = new File(file1);
             if (!inFile.isFile()) {
-            	JOptionPane.showMessageDialog(null, "El fichero de configuración: " + file1 +" no ha sido encontrado", "Ups, algo ha ido mal", JOptionPane.ERROR_MESSAGE);
+            	String pwd = CMD.getPWD();
+            	JOptionPane.showMessageDialog(null, "El fichero de configuración: " + file1 +" no ha sido encontrado en: " + pwd, "Ups, algo ha ido mal", JOptionPane.ERROR_MESSAGE);
                 return;
             }
             //Construct the new file that will later be renamed to the original filename. 
@@ -117,7 +122,8 @@ public class GestorScripts {
             // Ahora para el script 2
             inFile = new File(file2);
             if (!inFile.isFile()) {
-            	JOptionPane.showMessageDialog(null, "El fichero de configuración: " + file2 +" no ha sido encontrado", "Ups, algo ha ido mal", JOptionPane.ERROR_MESSAGE);
+            	String pwd = CMD.getPWD();
+            	JOptionPane.showMessageDialog(null, "El fichero de configuración: " + file2 +" no ha sido encontrado en: " + pwd, "Ups, algo ha ido mal", JOptionPane.ERROR_MESSAGE);
                 return;
             }
             
@@ -140,7 +146,8 @@ public class GestorScripts {
  
             
         } catch (FileNotFoundException ex) {
-            JOptionPane.showMessageDialog(null, "El fichero de configuración no ha sido encontrado", "Ups, algo ha ido mal", JOptionPane.ERROR_MESSAGE);
+        	
+            JOptionPane.showMessageDialog(null, "El fichero de configuración ha fallado por : " + ex.getMessage(), "Ups, algo ha ido mal", JOptionPane.ERROR_MESSAGE);
         } catch (IOException ex) {
         	 JOptionPane.showMessageDialog(null, "Se ha encontrado un error al leer o escribir en los ficheros de configuración", "Ups, algo ha ido mal", JOptionPane.ERROR_MESSAGE);
         }
