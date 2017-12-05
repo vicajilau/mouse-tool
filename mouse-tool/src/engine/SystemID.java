@@ -1,6 +1,7 @@
 package engine;
 
 import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
@@ -15,8 +16,9 @@ public class SystemID {
 	/**
 	 * Constructor de clase
 	 * @throws ExcepcionObteniendoID Puede no obtener el ID, se debe tratar en la declaración
+	 * @throws IOException 
 	 */
-	public SystemID() throws ExcepcionObteniendoID {
+	public SystemID() throws ExcepcionObteniendoID, IOException {
 		id = getIDTouchpad();
 	}
 	
@@ -32,13 +34,24 @@ public class SystemID {
 	 * En base a la configuración del sistema, calcula el id del Touchpad y lo devuelve
 	 * @return El ID del dispositivo
 	 * @throws ExcepcionObteniendoID Puede no obtener el ID, se debe tratar en la declaración
+	 * @throws IOException 
 	 */
-	public String getIDTouchpad() throws ExcepcionObteniendoID{
+	public String getIDTouchpad() throws ExcepcionObteniendoID, IOException{
 		int devices = getDevicesTouchpad();
     	if(devices > 1) {
     		// Hay más de 1 dispositivo (Se debe resolver posibles conflictos en múltiples ids en el futuro)
+    		FileConfiguracion fc = new FileConfiguracion();
+    		if(!fc.existeFicheroConfiguracion()) {
+    			fc.creaFicheros(getIDMultiplesDispositivos());
+    		}else {
+    			FileReader fr = new FileReader( fc.getFile());
+    			BufferedReader br = new BufferedReader(fr);
+    			String linea = br.readLine();
+    			br.close();
+    			return linea.trim();
+    		}
     		try {
-				return getIDMultiplesDispositivos(devices);
+				return getIDMultiplesDispositivos();
 			} catch (ExcepcionObteniendoID e) {
 				// Algo ha salido mal al obtener el ID (Se debería generar excepcion en el futuro)
 	    		throw new ExcepcionObteniendoID("No ha encontrado nigún ID");
@@ -91,7 +104,7 @@ public class SystemID {
      * @param n
      * @return
      */
-    private String getIDMultiplesDispositivos(int n) throws ExcepcionObteniendoID{
+    private String getIDMultiplesDispositivos() throws ExcepcionObteniendoID{
         try {
             Boolean encontrado = false;
             
@@ -102,7 +115,7 @@ public class SystemID {
             while (!encontrado && ((line = in.readLine()) != null)) {  
                 if(esLineaDelTouchpad(line)){
                     Terminal.enviarComandoSinDevol("xinput disable "+getID(line));
-                    int resultado = JOptionPane.showConfirmDialog(null, "Se ha procedido a realizar una prueba, ¿Esto ha desactivado el touchpad? seleccione sí o no", "Ventana de configuración", JOptionPane.YES_NO_OPTION);
+                    int resultado = JOptionPane.showConfirmDialog(null, "Se ha detectado varios dispositivos Touchpad y por ello hemos procedido a realizar una prueba, ¿Esto ha desactivado el touchpad? seleccione sí o no", "Asistente de configuración", JOptionPane.YES_NO_OPTION);
                 	if(resultado==JOptionPane.YES_OPTION) {
                 		encontrado = true;
                 		Terminal.enviarComandoSinDevol("xinput enable "+getID(line));

@@ -1,5 +1,7 @@
 package engine;
 
+import java.io.IOException;
+
 import javax.swing.JOptionPane;
 
 import excepciones.ExcepcionObteniendoID;
@@ -15,7 +17,7 @@ public class Principal {
 	 * @param args
 	 */
 
-	public static void main(String[] args) {
+	public static void main(String[] args)throws IOException {
 		// TODO Auto-generated method stub
 		System.out.print("Los parámetros introducidos son: " );
 		for (int i=0; i<args.length; i++) {
@@ -49,9 +51,6 @@ public class Principal {
 						System.out.println("No es un parámetro válido");
 					}
 					
-				} catch (NumberFormatException e) {
-					// TODO Auto-generated catch block
-					JOptionPane.showMessageDialog(null, "No se ha podido convertir un número", "Ups, algo ha salido mal", JOptionPane.ERROR_MESSAGE);
 				} catch (ExcepcionObteniendoID e) {
 					JOptionPane.showMessageDialog(null, "No se ha podido obtener el ID asociado al touchpad, compruebe que su equipo dispone de xinput", "Ups, algo ha salido mal", JOptionPane.ERROR_MESSAGE);
 				}
