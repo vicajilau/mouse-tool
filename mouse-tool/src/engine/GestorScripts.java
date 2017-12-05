@@ -14,10 +14,10 @@ public class GestorScripts {
 	
 	public static String textoPorDefectActivaRaton = "xinput enable XX";
 	public static String textoPorDefectDesactivaRaton = "xinput disable XX";
-	//public static String direccionScript1 = "/opt/mouse-tool/config/activa-raton";
-	//public static String direccionScript2 = "/opt/mouse-tool/config/desactiva-raton";
-	public static String direccionScript1 = "./config/activa-raton";
-	public static String direccionScript2 = "./config/desactiva-raton";
+	public static String direccionScript1 = "/opt/mouse-tool/config/activa-raton";
+	public static String direccionScript2 = "/opt/mouse-tool/config/desactiva-raton";
+	//public static String direccionScript1 = "./config/activa-raton";
+	//public static String direccionScript2 = "./config/desactiva-raton";
 	
 	/**
 	 * Vuelve a dejar los scripts en configuración por defecto
