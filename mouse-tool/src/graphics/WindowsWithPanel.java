@@ -12,8 +12,6 @@ import static java.awt.GraphicsDevice.WindowTranslucency.*;
 
 public class WindowsWithPanel extends JFrame {
 
-
-	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 
 	/**

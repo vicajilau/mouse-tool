@@ -1,7 +1,7 @@
 package excepciones;
 
 public class ExcepcionObteniendoID extends Exception {
-	
+
 	/**
 	 * Constructor de clase
 	 * @param message El mensaje de error
