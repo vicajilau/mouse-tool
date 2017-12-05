@@ -1,11 +1,15 @@
 package engine;
 
+import excepciones.ExcepcionObteniendoID;
+
 public class Touchpad{
     private int id;
     /**
      * Constructor de objetos de la clase Touchpad
+     * @throws ExcepcionObteniendoID 
+     * @throws NumberFormatException 
      */
-    public Touchpad(){
+    public Touchpad() throws NumberFormatException, ExcepcionObteniendoID{
         id = Integer.parseInt(obtenElIdDelSistema());
     }
     
@@ -13,7 +17,7 @@ public class Touchpad{
      * En función del numero de IDs encontrados devuelve el ID apropiado para cada situación
      * @return Un único ID en forma de cadena
      */
-    private String obtenElIdDelSistema() {
+    private String obtenElIdDelSistema() throws ExcepcionObteniendoID{
     	int devices = CMD.getDevicesTouchpad();
     	if(devices > 1) {
     		// Hay más de 1 dispositivo (Se debe resolver posibles conflictos en múltiples ids en el futuro)
@@ -22,7 +26,7 @@ public class Touchpad{
     		return getID(CMD.getIDConsola());
     	}else {
     		// Algo ha salido mal al obtener el ID (Se debería generar excepcion en el futuro)
-    		return new String();
+    		throw new ExcepcionObteniendoID("No ha encontrado nigún ID");
     	}
     }
     
