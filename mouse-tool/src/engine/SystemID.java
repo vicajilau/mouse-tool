@@ -1,4 +1,5 @@
 package engine;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -7,17 +8,47 @@ import javax.swing.JOptionPane;
 
 import excepciones.ExcepcionObteniendoID;
 
-public class CMD {
+public class SystemID {
+	
+	private String id;
 	
 	/**
-	 * Envía un comando sin parámetros que no devuelve nada
-	 * @param comando El comando a introducir
+	 * Constructor de clase
+	 * @throws ExcepcionObteniendoID Puede no obtener el ID, se debe tratar en la declaración
 	 */
-	public static void enviarComandoSinDevol(String comando) {
-		try {
-		    Runtime.getRuntime().exec(comando);
-		} catch (IOException e) {
-		}
+	public SystemID() throws ExcepcionObteniendoID {
+		id = getIDTouchpad();
+	}
+	
+	/**
+	 * Obtiene el ID asociado al Touchpad en este sistema
+	 * @return El ID en forma de cadena
+	 */
+	public String getID() {
+		return id;
+	}
+	
+	/**
+	 * En base a la configuración del sistema, calcula el id del Touchpad y lo devuelve
+	 * @return El ID del dispositivo
+	 * @throws ExcepcionObteniendoID Puede no obtener el ID, se debe tratar en la declaración
+	 */
+	public String getIDTouchpad() throws ExcepcionObteniendoID{
+		int devices = getDevicesTouchpad();
+    	if(devices > 1) {
+    		// Hay más de 1 dispositivo (Se debe resolver posibles conflictos en múltiples ids en el futuro)
+    		try {
+				return getIDMultiplesDispositivos(devices);
+			} catch (ExcepcionObteniendoID e) {
+				// Algo ha salido mal al obtener el ID (Se debería generar excepcion en el futuro)
+	    		throw new ExcepcionObteniendoID("No ha encontrado nigún ID");
+			}
+    	}else if(devices==1) {
+    		return getIDConsola();
+    	}else {
+    		// Algo ha salido mal al obtener el ID (Se debería generar excepcion en el futuro)
+    		throw new ExcepcionObteniendoID("No ha encontrado nigún ID");
+    	}
 	}
 	
     /**
@@ -25,7 +56,7 @@ public class CMD {
      * @param linea La línea donde aparece
      * @return
      */
-    private static boolean esLineaDelTouchpad(String linea){
+    private boolean esLineaDelTouchpad(String linea){
      return linea.trim().toLowerCase().contains("touchpad");
     }
 	
@@ -34,7 +65,7 @@ public class CMD {
      * Devuelve el ID asociado al touchpad en xinput
      * @return El ID asociado al touchpad
      */
-    public static String getIDConsola(){
+    private String getIDConsola(){
         try {
             Boolean encontrado = false;
             
@@ -48,7 +79,7 @@ public class CMD {
                 }
             }
             if(encontrado){
-                return line;
+                return getID(line);
             }
         } catch (IOException e) {
         }
@@ -60,7 +91,7 @@ public class CMD {
      * @param n
      * @return
      */
-    public static String getIDMultiplesDispositivos(int n) throws ExcepcionObteniendoID{
+    private String getIDMultiplesDispositivos(int n) throws ExcepcionObteniendoID{
         try {
             Boolean encontrado = false;
             
@@ -70,16 +101,16 @@ public class CMD {
             String line = null;  
             while (!encontrado && ((line = in.readLine()) != null)) {  
                 if(esLineaDelTouchpad(line)){
-                    enviarComandoSinDevol("xinput disable "+getID(line));
+                    Terminal.enviarComandoSinDevol("xinput disable "+getID(line));
                     int resultado = JOptionPane.showConfirmDialog(null, "Se ha procedido a realizar una prueba, ¿Esto ha desactivado el touchpad? seleccione sí o no", "Ventana de configuración", JOptionPane.YES_NO_OPTION);
                 	if(resultado==JOptionPane.YES_OPTION) {
                 		encontrado = true;
-                		enviarComandoSinDevol("xinput enable "+getID(line));
+                		Terminal.enviarComandoSinDevol("xinput enable "+getID(line));
                 	}
                 }
             }
             if(encontrado){
-                return line;
+                return getID(line);
             }
         } catch (IOException e) {
         }
@@ -90,7 +121,7 @@ public class CMD {
      * Obtiene el numero id del touchpad de la linea
      * @param line La linea de la consola donde aparece el ID
      */
-    private static String getID(String line){
+    private String getID(String line){
      int inicio = line.indexOf("=")+1;
      int fin = inicio + 2;
      
@@ -101,7 +132,7 @@ public class CMD {
      * Comprueba cuantos dispositivos Touchpad hay en el sistema
      * @return El número de dispositivos Touchpad
      */
-    public static int getDevicesTouchpad() {
+    private int getDevicesTouchpad() {
     	int devices = 0;  
     	 try {
              // Ejecuta un comando sin argumentos
@@ -117,31 +148,5 @@ public class CMD {
          } catch (IOException e) {
          }
          return devices;
-    }
-    
-    /**
-     * Envía un comando para saber la dirección en donde está buscando el fichero y es devuelta 
-     * como un String
-     * @return La ruta en donde se encuentra
-     */
-    public static String getPWD() {
-    	try {
-            Boolean encontrado = false;
-            
-            // Ejecuta un comando sin argumentos
-            Process p = Runtime.getRuntime().exec("pwd");  
-            BufferedReader in = new BufferedReader( new InputStreamReader(p.getInputStream()));  
-            String line = null;  
-            while (!encontrado && ((line = in.readLine()) != null)) {  
-                if(line.contains("/")){
-                    encontrado = true;
-                }
-            }
-            if(encontrado){
-                return line;
-            }
-        } catch (IOException e) {
-        }
-        return null;
     }
 }
