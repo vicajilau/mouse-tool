@@ -3,6 +3,10 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import javax.swing.JOptionPane;
+
+import excepciones.ExcepcionObteniendoID;
+
 public class CMD {
 	
 	/**
@@ -28,7 +32,7 @@ public class CMD {
 	
     /**
      * Devuelve el ID asociado al touchpad en xinput
-     * @return     El ID asociado al touchpad
+     * @return El ID asociado al touchpad
      */
     public static String getIDConsola(){
         try {
@@ -51,7 +55,47 @@ public class CMD {
         return null;
     }
     
+    /**
+     * 
+     * @param n
+     * @return
+     */
+    public static String getIDMultiplesDispositivos(int n) throws ExcepcionObteniendoID{
+        try {
+            Boolean encontrado = false;
+            
+            // Ejecuta un comando sin argumentos
+            Process p = Runtime.getRuntime().exec("xinput list");  
+            BufferedReader in = new BufferedReader( new InputStreamReader(p.getInputStream()));  
+            String line = null;  
+            while (!encontrado && ((line = in.readLine()) != null)) {  
+                if(esLineaDelTouchpad(line)){
+                    enviarComandoSinDevol("bash xinput disable "+getID(line));
+                    int resultado = JOptionPane.showConfirmDialog(null, "Se ha procedido a realizar una prueba, ¿Esto ha desactivado el touchpad? seleccione sí o no", "Ventana de configuración", JOptionPane.YES_NO_OPTION);
+                	if(resultado==JOptionPane.YES_OPTION) {
+                		encontrado = true;
+                		enviarComandoSinDevol("bash xinput enable "+getID(line));
+                	}
+                }
+            }
+            if(encontrado){
+                return line;
+            }
+        } catch (IOException e) {
+        }
+        throw new ExcepcionObteniendoID("No ha podido obtenerse ningún ID");
+    }
     
+    /**
+     * Obtiene el numero id del touchpad de la linea
+     * @param line La linea de la consola donde aparece el ID
+     */
+    private static String getID(String line){
+     int inicio = line.indexOf("=")+1;
+     int fin = inicio + 2;
+     
+     return line.substring(inicio, fin).trim();
+    }
     
     /**
      * Comprueba cuantos dispositivos Touchpad hay en el sistema

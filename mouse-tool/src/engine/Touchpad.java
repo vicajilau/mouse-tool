@@ -21,7 +21,7 @@ public class Touchpad{
     	int devices = CMD.getDevicesTouchpad();
     	if(devices > 1) {
     		// Hay más de 1 dispositivo (Se debe resolver posibles conflictos en múltiples ids en el futuro)
-    		return getID(CMD.getIDConsola());
+    		return getID(CMD.getIDMultiplesDispositivos(devices));
     	}else if(devices==1) {
     		return getID(CMD.getIDConsola());
     	}else {
@@ -43,7 +43,7 @@ public class Touchpad{
      * Obtiene el numero id del touchpad de la linea
      * @param line La linea de la consola donde aparece el ID
      */
-    private String getID(String line){
+    public String getID(String line){
      int inicio = line.indexOf("=")+1;
      int fin = inicio + 2;
      
