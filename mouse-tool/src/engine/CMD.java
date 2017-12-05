@@ -70,11 +70,11 @@ public class CMD {
             String line = null;  
             while (!encontrado && ((line = in.readLine()) != null)) {  
                 if(esLineaDelTouchpad(line)){
-                    enviarComandoSinDevol("bash xinput disable "+getID(line));
+                    enviarComandoSinDevol("xinput disable "+getID(line));
                     int resultado = JOptionPane.showConfirmDialog(null, "Se ha procedido a realizar una prueba, ¿Esto ha desactivado el touchpad? seleccione sí o no", "Ventana de configuración", JOptionPane.YES_NO_OPTION);
                 	if(resultado==JOptionPane.YES_OPTION) {
                 		encontrado = true;
-                		enviarComandoSinDevol("bash xinput enable "+getID(line));
+                		enviarComandoSinDevol("xinput enable "+getID(line));
                 	}
                 }
             }
