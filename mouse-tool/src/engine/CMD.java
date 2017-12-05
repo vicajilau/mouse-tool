@@ -25,15 +25,10 @@ public class CMD {
      return linea.trim().toLowerCase().contains("touchpad");
     }
 	
-	/**
-	 * Envía un comando sin parámetros que no devuelve nada
-	 * @param comando El comando a introducir
-	 */
+	
     /**
-     * An example of a method - replace this comment with your own
-     * 
-     * @param  y   a sample parameter for a method
-     * @return     the sum of x and y 
+     * Devuelve el ID asociado al touchpad en xinput
+     * @return     El ID asociado al touchpad
      */
     public static String getIDConsola(){
         try {
@@ -55,6 +50,8 @@ public class CMD {
         }
         return null;
     }
+    
+    
     
     /**
      * Comprueba cuantos dispositivos Touchpad hay en el sistema
