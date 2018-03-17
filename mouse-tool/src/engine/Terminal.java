@@ -19,6 +19,7 @@ public class Terminal {
 	 */
 	public static void enviarComandoSinDevol(String comando) {
 		try {
+			System.out.println("Se va a enviar a la línea de comandos: " + comando);
 		    Runtime.getRuntime().exec(comando);
 		} catch (IOException e) {
 		}

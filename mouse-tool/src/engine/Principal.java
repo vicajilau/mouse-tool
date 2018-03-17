@@ -28,7 +28,7 @@ public class Principal {
 		if(Sistema.esSoAdmitido()) {
 			try {
 				SystemID sysID = new SystemID();
-				System.out.println(sysID.getID());
+				System.out.println("El touchpad tiene un identificador: " + sysID.getID());
 			
 				if(PValidador.esParamValido(args)) {
 					Terminal terminal = new Terminal(sysID.getID());
@@ -48,7 +48,7 @@ public class Principal {
 						
 					} else {
 						// No es un parámetro válido
-						System.out.println("No es un parámetro válido");
+						System.out.println("No se ha podido lanzar ya que el parámetro no es válido");
 					}
 					
 				} catch (ExcepcionObteniendoID e) {
